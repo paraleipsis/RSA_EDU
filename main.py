@@ -1,6 +1,7 @@
 from sympy import isprime
 from math import gcd
 import eel
+import random
 
 eel.init('web')
 
@@ -72,17 +73,51 @@ def p_eval(p):
     return 83 #int(b[p])
 
 
-@eel.expose
-def e_check(q, p, e):
-    e = int(e)
-    q = q_eval(q)
-    p = p_eval(p)
-    phi_n = (p - 1) * (q - 1)
+def multiplicative_inverse(e, phi):
+    d = 0
+    x1 = 0
+    x2 = 1
+    y1 = 1
+    temp_phi = phi
 
-    if (gcd(e, phi_n) == 1) and (1 < e) and (e < phi_n):
-        return True
-    else:
-        return False
+    while e > 0:
+        temp1 = temp_phi//e
+        temp2 = temp_phi - temp1 * e
+        temp_phi = e
+        e = temp2
+
+        x = x2 - temp1 * x1
+        y = d - temp1 * y1
+
+        x2 = x1
+        x1 = x
+        d = y1
+        y1 = y
+
+    if temp_phi == 1:
+        return d + phi
+
+
+@eel.expose
+def generate_key_pair(p, q):
+    p = p_eval(p)
+    q = q_eval(q)
+
+    n = p * q
+
+    phi = (p-1) * (q-1)
+
+    e = random.randrange(1, phi)
+
+    g = gcd(e, phi)
+    while g != 1:
+        e = random.randrange(1, phi)
+        g = gcd(e, phi)
+
+    d = multiplicative_inverse(e, phi)
+
+    # Public key is (e, n) and private key is (d, n)
+    return (e, n), (d, n)
 
 
 eel.start('main.html', size=(1180, 732))

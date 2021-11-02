@@ -122,23 +122,6 @@ body {
     color: rgba(0, 0, 0, 0.267);
 }
 
-#location4 {
-    display: block;
-    border: 2px solid #000000;
-    background: linear-gradient(90deg, #FFFFFF, #ECE9E6);
-    border-radius: 10px;
-    padding: 20px;
-    color: black;
-    outline: none;
-    width: 77%;
-    font-size: 30px;
-    margin-top: 105px;
-    margin-left: 67px;
-}
-
-#location4::placeholder {
-    color: rgba(0, 0, 0, 0.267);
-}
 
 #einf {
     display: block;
