@@ -120,4 +120,4 @@ def generate_key_pair(p, q):
     return (e, n), (d, n)
 
 
-eel.start('main.html', size=(1180, 732))
+eel.start('encrypt.html', size=(1180, 732))
