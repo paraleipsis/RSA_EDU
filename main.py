@@ -70,7 +70,7 @@ def p_eval(p):
         h += 13
         k1 += 1
 
-    return 83 #int(b[p])
+    return 83  # int(b[p])
 
 
 def multiplicative_inverse(e, phi):
@@ -81,7 +81,7 @@ def multiplicative_inverse(e, phi):
     temp_phi = phi
 
     while e > 0:
-        temp1 = temp_phi//e
+        temp1 = temp_phi // e
         temp2 = temp_phi - temp1 * e
         temp_phi = e
         e = temp2
@@ -100,24 +100,27 @@ def multiplicative_inverse(e, phi):
 
 @eel.expose
 def generate_key_pair(p, q):
-    p = p_eval(p)
-    q = q_eval(q)
+    try:
+        p = p_eval(p)
+        q = q_eval(q)
 
-    n = p * q
+        n = p * q
 
-    phi = (p-1) * (q-1)
+        phi = (p - 1) * (q - 1)
 
-    e = random.randrange(1, phi)
-
-    g = gcd(e, phi)
-    while g != 1:
         e = random.randrange(1, phi)
+
         g = gcd(e, phi)
+        while g != 1:
+            e = random.randrange(1, phi)
+            g = gcd(e, phi)
 
-    d = multiplicative_inverse(e, phi)
+        d = multiplicative_inverse(e, phi)
 
-    # Public key is (e, n) and private key is (d, n)
-    return (e, n), (d, n)
+        return (e, n), (d, n)
+
+    except ValueError:
+        return 'ValueError'
 
 
 eel.start('encrypt.html', size=(1180, 732))
