@@ -2,6 +2,7 @@ from sympy import isprime
 from math import gcd
 import eel
 import random
+import re
 
 eel.init('web')
 
@@ -20,12 +21,15 @@ def ru_dict():
 @eel.expose
 def q_eval(q):
     q = q.replace(' ', '')
+    q = re.sub(r'\d', '', q)
     a = ru_dict()
     k = 0
+    t = []
 
     for i in q.lower():
         for j in a.items():
             if j[1] == i:
+                t.append(j[0])
                 k += j[0]
                 break
 
@@ -39,13 +43,13 @@ def q_eval(q):
             if not isprime(c):
                 c += 1
             else:
-                return c
+                return c, t
             if not isprime(v):
                 v -= 1
             else:
-                return v
+                return v, t
     else:
-        return k
+        return k, t
 
 
 @eel.expose
@@ -70,7 +74,7 @@ def p_eval(p):
         h += 13
         k1 += 1
 
-    return 83  # int(b[p])
+    return int(b[p])
 
 
 def multiplicative_inverse(e, phi):
@@ -102,11 +106,11 @@ def multiplicative_inverse(e, phi):
 def generate_key_pair(p, q):
     try:
         p = p_eval(p)
-        q = q_eval(q)
+        q = q_eval(q) # [0] - сумма чисел, соответствующих буквам фамилии; [1] - сама последовательность чисел
 
-        n = p * q
+        n = p * q[0]
 
-        phi = (p - 1) * (q - 1)
+        phi = (p - 1) * (q[0] - 1)
 
         e = random.randrange(1, phi)
 
@@ -117,10 +121,27 @@ def generate_key_pair(p, q):
 
         d = multiplicative_inverse(e, phi)
 
-        return (e, n), (d, n)
+        return (e, n), d, q[1], p, q[0], n, phi # [0][0] - число e; [0][1] - число n; [1] - число d; [2] -
+        # последовательность чисел q; [3] - число p; [4] - наиболее близкое натуральное число q; [5] - произведение p
+        # * q = n; [6] - ф-ция Эйлера;
 
     except ValueError:
         return 'ValueError'
+
+
+@eel.expose
+def m_encrypt(m):
+    m = m[:5]
+    m = m.replace(' ', '')
+    m = re.sub(r'\d', '', m)
+    a = ru_dict()
+    t = []
+    for i in m.lower():
+        for j in a.items():
+            if j[1] == i:
+                t.append(j[0])
+                break
+    return m.upper(), t
 
 
 eel.start('encrypt.html', size=(1180, 732))

@@ -3,6 +3,23 @@
     font-family: "Roboto", sans-serif;
 }
 
+/*  Scrollbar */
+nav::-webkit-scrollbar {
+    width: 10px;
+  }
+   
+nav::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: #f9f9fd;
+  }
+   
+nav::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: linear-gradient(240deg, #000000, #434343, #ECE9E6);
+    outline: 1px solid slategrey;
+  }
+
 /*  фон */
 body {
     height: 665px;
@@ -33,6 +50,28 @@ body {
     color: white;
 }
 
+/*  кнопка зашифровать 2 */
+#get1 {
+    display: block;
+    border: 2px solid #000000;
+    background: linear-gradient(90deg, #FFFFFF, #ECE9E6);
+    border-radius: 15px 100px 15px 100px;;
+    padding: 20px;
+    color: #000000;
+    outline: none;
+    width: 55%;
+    font-size: 30px;
+    margin-top: 130px;
+    margin-left: 165px;
+    cursor: pointer;
+}
+
+#get1:hover {
+    opacity: .8;
+    background: linear-gradient(240deg, #000000, #434343);
+    color: white;
+}
+
 #info {
     display: inline-block;
     border: 2px solid #000000;
@@ -42,7 +81,7 @@ body {
     color: rgb(0, 0, 0);
     outline: none;
     width: 430px;
-    height: 603px;
+    height: 565px;
     font-size: 30px;
     position: absolute;
     left: 667px;
@@ -76,7 +115,7 @@ body {
     padding: 20px;
     color: black;
     outline: none;
-    width: 35%;
+    width: 77%;
     font-size: 30px;
     margin-top: 15px;
     margin-left: 67px;
@@ -87,17 +126,17 @@ body {
 }
 
 #location2 {
-    float:right;
+    float:left;
     border: 2px solid #000000;
     background: linear-gradient(90deg, #FFFFFF, #ECE9E6);
     border-radius: 10px;
     padding: 20px;
     color: black;
     outline: none;
-    width: 35%;
+    width: 77%;
     font-size: 30px;
     margin-top: 15px;
-    margin-right: 40px;
+    margin-left: 65px;
 }
 
 #location2::placeholder {
@@ -115,7 +154,7 @@ body {
     width: 77%;
     font-size: 30px;
     margin-top: 105px;
-    margin-left: 67px;
+    margin-left: 65px;
 }
 
 #location3::placeholder {
@@ -133,6 +172,18 @@ body {
     font-size: 30px;
     margin-top: 1px;
     margin-left: 67px;
+ } 
+
+ #einf1 {
+    display: block;
+    background: white;
+    color: black;
+    width: 500px;
+    height: 500px;
+    width: 85%;
+    font-size: 30px;
+    margin-top: 35px;
+    margin-left: 30px;
  } 
  
 
@@ -484,13 +535,180 @@ textarea {
     visibility: hidden;
     opacity: 0;
 }
- 
+
 [id='nav-toggle']:checked ~ .mask-content {
     visibility: visible;
     opacity: 1;
     -webkit-transition: opacity .5s, visibility .5s;
     transition: opacity .5s, visibility .5s;
 }
+
+/**
+ * Переключаемая нижняя панель логов
+ * выдвигающаяся по клику снизу
+ */
+ 
+ .nav1 {
+    width: 743px;
+    height: 330px;
+    min-height: 320px;
+    position: absolute;
+    bottom: 0;
+    right: 1px;
+    
+    
+    /* сдвигаем (прячем) панель относительно левого края страницы */
+    bottom: -320px;
+    /* внутренние отступы */
+    padding: 25px 25px;
+    /* плавный переход смещения панели */
+    -webkit-transition: bottom 0.3s;
+    -moz-transition: bottom 0.3s;
+    transition: bottom 0.3s;
+    /* определяем цвет фона панели */
+    background: white;
+    /* поверх других элементов */
+    z-index: 2000;
+  }
+
+/**
+ * Кнопка переключения панели
+ * тег <label>
+ */
+ 
+ .nav-toggle1 {
+    /* абсолютно позиционируем */
+    position: absolute;
+    /* относительно левого края панели */
+    right: 50px;
+    /* отступ от верхнего края панели */
+    top: 1em;
+    
+    /* определяем цвет фона переключателя
+     * чаще вчего в соответствии с цветом фона панели
+    */
+    background: inherit;
+    /* цвет текста */
+    color: black;
+    /* вид курсора */
+    cursor: pointer;
+    /* размер шрифта */
+    font-size: 1.2em;
+    line-height: 1;
+    /* всегда поверх других элементов страницы */
+    z-index: 2001;
+    /* анимируем цвет текста при наведении */
+    -webkit-transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    transition: color .25s ease-in-out;
+}
+ 
+/* определяем текст кнопки 
+ * символ Unicode (TRIGRAM FOR HEAVEN)
+*/
+ 
+.nav-toggle1:after {
+    content: '\2630';
+    text-decoration: none;
+}
+ 
+/* цвет текста при наведении */
+ 
+.nav-toggle1:hover {
+    color: black;
+}
+ 
+/**
+ * Скрытый чекбокс (флажок)
+ * невидим и недоступен :)
+ * имя селектора атрибут флажка
+ */
+ 
+[id='nav-toggle1'] {
+    position: absolute;
+    display: none;
+}
+ 
+
+/**
+ * Когда флажок установлен, открывается панель
+ * используем псевдокласс:checked
+ */
+ 
+[id='nav-toggle1']:checked ~ .nav1 {
+    bottom: 0;
+    box-shadow:4px 0px 20px 0px rgba(0,0,0, 0.5);
+    -moz-box-shadow:4px 0px 20px 0px rgba(0,0,0, 0.5);
+    -webkit-box-shadow:4px 0px 20px 0px rgba(0,0,0, 0.5);
+    overflow-y: auto;
+}
+ 
+/* 
+ * смещение контента страницы
+ * на размер ширины панели,
+ * фишка необязательная, на любителя
+*/
+ 
+[id='nav-toggle1']:checked ~ main > article {
+    -webkit-transform: translateX(320px);
+    -moz-transform: translateX(320px);
+    transform: translateX(320px);
+}
+ 
+/*
+ * изменение символа переключателя,
+ * привычный крестик (MULTIPLICATION X), 
+ * вы можете испльзовать любой другой значок
+*/
+ 
+[id='nav-toggle1']:checked ~ .nav1 > .nav-toggle1:after {
+    content: 'Панель логов ' ' \2715';
+}
+
+ 
+/**
+ * формируем непосредственно само меню
+ * используем неупорядоченный список для пунктов меню
+ * прикрутим трансфомации и плавные переходы
+ */
+ 
+.nav1 > div {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ 
+
+ 
+/* фон затемнения на основной контент 
+ * при этом элементы блокируютя
+ * спорная такая фича, если оно вам надо
+ * просто раскомментируйте
+*/
+ 
+
+.mask-content1 {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+}
+ 
+[id='nav-toggle1']:checked ~ .mask-content1 {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity .5s, visibility .5s;
+    transition: opacity .5s, visibility .5s;
+}
+
+/*  прелоадер */
 
 .loaderArea {
     height: 732px;
