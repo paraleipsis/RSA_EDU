@@ -37,7 +37,7 @@
 
 
 Интерфейс программы:
-![Image alt](https://github.com/paraleipsis/repo_images/raw/main/RSA_EDU/gui.png)
+![Image alt](https://github.com/paraleipsis/repo_images/raw/main/RSA_EDU/gui.jpg)
 
 
 ## Расчетная часть (была выполнена на коленке за пару вечеров перед защитой курсовой, поэтому код абсолютно нечитаемый, плохо оптимизированный и нуждается в рефакторинге) - `power_series.py`:
